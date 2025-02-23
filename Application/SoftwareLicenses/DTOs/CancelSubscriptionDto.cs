@@ -1,7 +1,7 @@
+using Application.SoftwareLicenses.DTOs;
+
 namespace Application.SoftwareServices.DTOs;
 
-public class CancelSubscriptionDto
+public class CancelSubscriptionDto : PurchasedSoftwareLicenseDto
 {
-    public required string Id { get; set; }
-    public required string AccountId { get; set; }
 }

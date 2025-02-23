@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class SoftwareLicenseController : BaseApiController
+public class SoftwareLicensesController : BaseApiController
 {
     [HttpGet("account/{accountId}")]
     public async Task<ActionResult<List<SoftwareLicense>>> GetLicensesForAccount(string accountId) {

@@ -1,8 +1,8 @@
+using Application.SoftwareLicenses.DTOs;
+
 namespace Application.SoftwareServices.DTOs;
 
-public class ChangeLicenseQuantityDto
+public class ChangeLicenseQuantityDto : PurchasedSoftwareLicenseDto
 {
-    public required string Id { get; set; }
-    public required string AccountId { get; set; }
-    public required int Quantity { get; set; }
+    public int Quantity { get; set; }
 }

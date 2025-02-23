@@ -24,7 +24,7 @@ public class ExtendLicense
             if (service.AccountId != request.Dto.AccountId)
                 return Result<Unit>.Failure($"Account {request.Dto.AccountId} is not the owner of software service {request.Dto.Id}", 403);
 
-            service.ValidTo = service.ValidTo.AddMonths(request.Dto.Months);
+            service.ValidTo = service.ValidTo.AddMonths(request.Dto.DurationMonths);
             await context.SaveChangesAsync(cancellationToken);
 
             return Result<Unit>.Success(Unit.Value);

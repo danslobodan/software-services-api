@@ -1,10 +1,6 @@
-using System;
-
 namespace Application.SoftwareLicenses.DTOs;
 
-public class ExtendLicenseDto
+public class ExtendLicenseDto : PurchasedSoftwareLicenseDto
 {
-    public required string Id { get; set; }
-    public required string AccountId { get; set; }
-    public required int Months { get; set; }
+    public int DurationMonths { get; set; }
 }
