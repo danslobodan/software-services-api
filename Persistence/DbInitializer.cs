@@ -10,21 +10,20 @@ public class DbInitializer
             return;
 
         var customers = Enumerable.Range(0, 5)
-            .Select(i => new Customer());
-
-        context.Customers.AddRange(customers);
+            .Select(i => new Customer())
+            .ToList();
 
         var accounts = customers
             .SelectMany(customer => {
+                Console.WriteLine(customer.Id);
                 var accounts = Enumerable.Range(0, 5)
                     .Select(i => new Account() {
                         CustomerId = customer.Id
                     });
 
                 return accounts;
-            });
-
-        context.Accounts.AddRange(accounts);
+            })
+            .ToList();
 
         var softwareLicenses = accounts
             .SelectMany(account => {
@@ -39,8 +38,11 @@ public class DbInitializer
                     });
 
                 return sofwareLicenses;
-            });
+            })
+            .ToList();
 
+        context.Customers.AddRange(customers);
+        context.Accounts.AddRange(accounts);
         context.SoftwareLicenses.AddRange(softwareLicenses);
         
         await context.SaveChangesAsync();
