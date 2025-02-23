@@ -1,3 +1,4 @@
+using Application.SoftwareLicenses.DTOs;
 using Application.SoftwareServices.Commands;
 using Application.SoftwareServices.DTOs;
 using Application.SoftwareServices.Queries;
@@ -18,13 +19,18 @@ public class SoftwareLicenseController : BaseApiController
         return HandleResult(await Mediator.Send(new PurchaseSoftwareLicense.Command{ Dto = dto }));
     }
 
-    [HttpPut("/status")]
+    [HttpPut("status")]
     public async Task<ActionResult> CancelSubscription(CancelSubscriptionDto dto) {
         return HandleResult(await Mediator.Send(new CancelSubscription.Command{ Dto = dto }));
     }
 
-    [HttpPut("/quantity")]
+    [HttpPut("quantity")]
     public async Task<ActionResult> ChangeQuantity(ChangeLicenseQuantityDto dto) {
         return HandleResult(await Mediator.Send(new ChangeLicenseQuantity.Command{ Dto = dto }));
+    }
+
+    [HttpPut("valid-to")]
+    public async Task<ActionResult> ExtendLicense(ExtendLicenseDto dto) {
+        return HandleResult(await Mediator.Send(new ExtendLicense.Command { Dto = dto }));
     }
 }

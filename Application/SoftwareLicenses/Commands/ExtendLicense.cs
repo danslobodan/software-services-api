@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.SoftwareLicenses.DTOs;
 using MediatR;
 using Persistence;
 
@@ -7,9 +8,7 @@ namespace Application.SoftwareServices.Commands;
 public class ExtendLicense
 {
     public class Command : IRequest<Result<Unit>> {
-        public required string Id { get; set; }
-        public required string AccountId { get; set; }
-        public required int Months { get; set; }
+        public required ExtendLicenseDto Dto { get; set; }
     }
 
     public class Handler(ApiDbContext context) : IRequestHandler<Command, Result<Unit>>
@@ -17,15 +16,15 @@ public class ExtendLicense
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             var service = await context.SoftwareLicenses
-                .FindAsync([request.Id], cancellationToken);
+                .FindAsync([request.Dto.Id], cancellationToken);
 
            if (service == null) 
-                return Result<Unit>.Failure($"No software license with Id {request.Id}", 404);
+                return Result<Unit>.Failure($"No software license with Id {request.Dto.Id}", 404);
 
-            if (service.AccountId != request.AccountId)
-                return Result<Unit>.Failure($"Account {request.AccountId} is not the owner of software service {request.Id}", 403);
+            if (service.AccountId != request.Dto.AccountId)
+                return Result<Unit>.Failure($"Account {request.Dto.AccountId} is not the owner of software service {request.Dto.Id}", 403);
 
-            service.ValidTo = service.ValidTo.AddMonths(request.Months);
+            service.ValidTo = service.ValidTo.AddMonths(request.Dto.Months);
             await context.SaveChangesAsync(cancellationToken);
 
             return Result<Unit>.Success(Unit.Value);
