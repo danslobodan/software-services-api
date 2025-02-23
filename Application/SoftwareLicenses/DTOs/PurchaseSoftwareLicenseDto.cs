@@ -2,9 +2,9 @@ namespace Application.SoftwareServices.DTOs;
 
 public class PurchaseSoftwareLicenseDto
 {
-    public required string AccountId { get; set; }
-    public required string SoftwareId { get; set; }
-    public required string Name { get; set; }
-    public required int Quantity { get; set; }
-    public required int DurationMonths { get; set; }
+    public string AccountId { get; set; } = string.Empty;
+    public string SoftwareId { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public int Quantity { get; set; }
+    public int DurationMonths { get; set; }
 }
