@@ -1,5 +1,6 @@
 using Application.Core;
 using Application.SoftwareLicenses.DTOs;
+using Domain;
 using MediatR;
 using Persistence;
 
@@ -8,6 +9,7 @@ namespace Application.SoftwareServices.Commands;
 public class ExtendLicense
 {
     public class Command : IRequest<Result<Unit>> {
+        public required string Id { get; set; }
         public required ExtendLicenseDto Dto { get; set; }
     }
 
@@ -16,13 +18,13 @@ public class ExtendLicense
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             var service = await context.SoftwareLicenses
-                .FindAsync([request.Dto.Id], cancellationToken);
+                .FindAsync([request.Id], cancellationToken);
 
            if (service == null) 
-                return Result<Unit>.Failure($"No software license with Id {request.Dto.Id}", 404);
+                return Result<Unit>.Failure($"No software license with Id {request.Id}", 404);
 
-            if (service.AccountId != request.Dto.AccountId)
-                return Result<Unit>.Failure($"Account {request.Dto.AccountId} is not the owner of software service {request.Dto.Id}", 403);
+            if (service.State == LicenseState.Inactive)
+                return Result<Unit>.Failure($"Software license {request.Id} is inactive.", 400);
 
             service.ValidTo = service.ValidTo.AddMonths(request.Dto.DurationMonths);
             await context.SaveChangesAsync(cancellationToken);

@@ -16,10 +16,7 @@ public class GetSoftwareLicenses
     {
         public async Task<Result<List<SoftwareLicense>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var account = await context.Accounts.FindAsync([request.AccountId], cancellationToken);
-            if (account == null)
-                return Result<List<SoftwareLicense>>.Failure($"Account {request.AccountId} does not exist.", 404);
-
+            // TODO : implement paging
             var services = await context.SoftwareLicenses
                 .Where(ss => ss.AccountId == request.AccountId)
                 .ToListAsync(cancellationToken);

@@ -2,6 +2,6 @@ namespace Domain;
 
 public enum LicenseState
 {
-    Active,
-    Inactive,
+    Inactive = 0,
+    Active = 1,
 }

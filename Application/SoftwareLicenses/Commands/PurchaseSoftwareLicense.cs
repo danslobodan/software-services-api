@@ -19,6 +19,10 @@ public class PurchaseSoftwareLicense
         {
             // TODO : purchase software from CCP, API call
 
+            var account = await context.Accounts.FindAsync([request.Dto.AccountId], cancellationToken);
+            if (account == null)
+                return Result<string>.Failure($"Account {request.Dto.AccountId} does not exist.", 400);
+
             var softwareLicense = mapper.Map<SoftwareLicense>(request.Dto);
             softwareLicense.ValidTo = DateTime.Now.AddMonths(request.Dto.DurationMonths);
 

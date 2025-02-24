@@ -1,10 +1,13 @@
 using Application.SoftwareServices.Commands;
-using Application.SoftwareServices.DTOs;
+using FluentValidation;
 
 namespace Application.SoftwareLicenses.Validators;
 
-public class CancelSubscriptionValidator 
-    : PurchasedSoftwareLicenseValidator<CancelSubscription.Command, CancelSubscriptionDto>
+public class CancelSubscriptionValidator : AbstractValidator<CancelSubscription.Command>
 {
-    public CancelSubscriptionValidator() : base(x => x.Dto) {}
+    public CancelSubscriptionValidator()
+    {
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Id is required.");
+    }
 }
