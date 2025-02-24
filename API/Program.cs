@@ -12,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApiDbContext>(opts => {
-    opts.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opts.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")
+        ?? throw new InvalidOperationException("Connection string not found."));
 });
 builder.Services.AddMediatR(x => {
     x.RegisterServicesFromAssemblyContaining<GetAccountsList.Handler>();
