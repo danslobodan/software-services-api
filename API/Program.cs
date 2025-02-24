@@ -10,6 +10,7 @@ using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApiDbContext>(opts => {
     opts.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")
@@ -31,9 +32,14 @@ builder.Services.AddValidatorsFromAssemblyContaining<PurchaseSoftwareLicenseVali
 builder.Services.AddTransient<ExceptionMiddleware>();
 
 var app = builder.Build();
-
+app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
+
+if (app.Environment.IsDevelopment()) {
+    app.MapOpenApi();
+    app.UseSwaggerUI(opts => opts.SwaggerEndpoint("/openapi/v1.json", "Software Services V1"));
+}
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
