@@ -1,4 +1,4 @@
-using Application.SoftwareServices.Queries;
+using Application.Software.Queries;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +8,6 @@ public class SoftwareController : BaseApiController
 {
     [HttpGet]
     public async Task<ActionResult<List<Software>>> GetSoftware() {
-        return await Mediator.Send(new GetSoftware.Query{});
+        return HandleResult(await Mediator.Send(new GetSoftware.Query{}));
     }
 }

@@ -1,19 +1,20 @@
-using Domain;
+using SoftwareModel = Domain.Software;
 using MediatR;
+using Application.Interfaces;
+using Application.Core;
 
-namespace Application.SoftwareServices.Queries;
+namespace Application.Software.Queries;
 
 public class GetSoftware
 {
-    public class Query : IRequest<List<Software>> {}
+    public class Query : IRequest<Result<List<SoftwareModel>>> {}
 
-    public class Handler : IRequestHandler<Query, List<Software>>
+    public class Handler(ISoftwareVendor vendor) : IRequestHandler<Query, Result<List<SoftwareModel>>>
     {
-        public async Task<List<Software>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<List<SoftwareModel>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            // TODO : get software from CCP
-
-            return Enumerable.Empty<Software>().ToList();
+            var software = await vendor.GetSoftware();
+            return Result<List<SoftwareModel>>.Success(software);
         }
     }
 }
