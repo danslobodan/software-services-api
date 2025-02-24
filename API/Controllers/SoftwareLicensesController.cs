@@ -9,8 +9,8 @@ namespace API.Controllers;
 
 public class SoftwareLicensesController : BaseApiController
 {
-    [HttpGet("account/{accountId}")]
-    public async Task<ActionResult<List<SoftwareLicense>>> GetLicensesForAccount(string accountId) {
+    [HttpGet]
+    public async Task<ActionResult<List<SoftwareLicense>>> GetLicensesForAccount([FromQuery] string accountId) {
         return HandleResult(await Mediator.Send(new GetSoftwareLicenses.Query{ AccountId = accountId }));
     }
 
@@ -19,17 +19,17 @@ public class SoftwareLicensesController : BaseApiController
         return HandleResult(await Mediator.Send(new PurchaseSoftwareLicense.Command{ Dto = dto }));
     }
 
-    [HttpPut("status")]
+    [HttpPatch("status")]
     public async Task<ActionResult> CancelSubscription(CancelSubscriptionDto dto) {
         return HandleResult(await Mediator.Send(new CancelSubscription.Command{ Dto = dto }));
     }
 
-    [HttpPut("quantity")]
+    [HttpPatch("quantity")]
     public async Task<ActionResult> ChangeQuantity(ChangeLicenseQuantityDto dto) {
         return HandleResult(await Mediator.Send(new ChangeLicenseQuantity.Command{ Dto = dto }));
     }
 
-    [HttpPut("valid-to")]
+    [HttpPatch("valid-to")]
     public async Task<ActionResult> ExtendLicense(ExtendLicenseDto dto) {
         return HandleResult(await Mediator.Send(new ExtendLicense.Command { Dto = dto }));
     }
