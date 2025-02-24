@@ -1,4 +1,4 @@
-using Application.Accounts.Queries;
+using Application.SoftwareServices.Queries;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,8 +6,8 @@ namespace API.Controllers;
 
 public class AccountsController : BaseApiController
 {
-    [HttpGet]
-    public async Task<ActionResult<List<Account>>> GetAccountList([FromQuery] string customerId) {
-        return await Mediator.Send(new GetAccountsList.Query{ CustomerId = customerId });
+    [HttpGet("{id}/software-licenses")]
+    public async Task<ActionResult<List<SoftwareLicense>>> GetSoftwareLicenses(string id) {
+        return HandleResult(await Mediator.Send(new GetSoftwareLicenses.Query{ AccountId = id }));
     }
 }
