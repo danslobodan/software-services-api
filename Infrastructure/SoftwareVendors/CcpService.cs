@@ -1,25 +1,30 @@
+using System.Net.Http.Json;
 using Application.Interfaces;
 using Application.Software.DTOs;
 using Domain;
-using Infrastructure.SoftwareVendors;
-using Microsoft.Extensions.Options;
 
-namespace Infrastructure;
+namespace Infrastructure.SoftwareVendors;
 
-public class CcpService : ISoftwareVendor
+public class CcpService(IHttpClientFactory clientFactory) : ISoftwareVendor
 {
-    public CcpService(IOptions<CcpSettings> config)
+    readonly HttpClient _client = clientFactory.CreateClient("ccp");
+
+    public async Task<List<Software>> GetSoftware()
     {
-        // TODO : prepare the authorization header
+        return await _client.GetFromJsonAsync<List<Software>>("api/software") ??
+             throw new Exception("Ccp service returned a null result when trying to get software list.");
     }
 
-    public Task<List<Software>> GetSoftware()
+    public async Task<OrderSofwareResult> OrderSoftware(OrderSoftwareRequest request)
     {
-        throw new NotImplementedException();
-    }
+        Console.WriteLine($"{request.Id}");
+        var result = await _client.PostAsJsonAsync("api/software", request);
 
-    public Task<OrderSofwareResult> OrderSoftware(OrderSoftwareRequest request)
-    {
-        throw new NotImplementedException();
+        if (!result.IsSuccessStatusCode) {
+            var error = await result.Content.ReadAsStringAsync();
+            return new OrderSofwareResult() { Success = false, Error = error };
+        }
+
+        return new OrderSofwareResult() { Success = true, Error = string.Empty };
     }
 }

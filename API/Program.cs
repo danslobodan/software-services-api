@@ -4,7 +4,6 @@ using Application.Core;
 using Application.Interfaces;
 using Application.SoftwareServices.Validators;
 using FluentValidation;
-using Infrastructure;
 using Infrastructure.SoftwareVendors;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -19,11 +18,16 @@ builder.Services.AddMediatR(x => {
     x.RegisterServicesFromAssemblyContaining<GetAccountsList.Handler>();
     x.AddOpenBehavior(typeof(ValidatorBehavior<,>));
 });
+
+builder.Services.AddHttpClient("ccp", client => {
+    var baseUrl = builder.Configuration.GetSection("CcpSettings")
+        .GetValue<string>("BaseUrl") ?? string.Empty;
+    client.BaseAddress = new Uri(baseUrl);
+});
 builder.Services.AddScoped<ISoftwareVendor, CcpService>();
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddValidatorsFromAssemblyContaining<PurchaseSoftwareLicenseValidator>();
 builder.Services.AddTransient<ExceptionMiddleware>();
-builder.Services.Configure<CcpSettings>(builder.Configuration.GetSection("CcpService"));
 
 var app = builder.Build();
 
