@@ -1,0 +1,6 @@
+@CcpMock_HostAddress = http://localhost:5089
+
+GET {{CcpMock_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
