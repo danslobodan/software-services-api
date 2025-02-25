@@ -1,4 +1,4 @@
-using Application.SoftwareServices.Queries;
+using Application.SoftwareLicenses.Queries;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 
