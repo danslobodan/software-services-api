@@ -1,4 +1,4 @@
-using Application.SoftwareServices.DTOs;
+using Application.SoftwareLicenses.DTOs;
 using AutoMapper;
 using Domain;
 
