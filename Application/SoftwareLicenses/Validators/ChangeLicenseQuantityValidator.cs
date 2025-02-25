@@ -1,6 +1,5 @@
 using System;
-using Application.SoftwareServices.Commands;
-using Application.SoftwareServices.DTOs;
+using Application.SoftwareLicenses.Commands;
 using FluentValidation;
 
 namespace Application.SoftwareLicenses.Validators;

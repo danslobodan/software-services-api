@@ -4,7 +4,7 @@ using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.SoftwareServices.Commands;
+namespace Application.SoftwareLicenses.Commands;
 
 public class ExtendLicense
 {
@@ -26,7 +26,10 @@ public class ExtendLicense
             if (service.State == LicenseState.Inactive)
                 return Result<Unit>.Failure($"Software license {request.Id} is inactive.", 400);
 
-            service.ValidTo = service.ValidTo.AddMonths(request.Dto.DurationMonths);
+            if (request.Dto.ValidTo <= request.Dto.ValidTo)
+                return Result<Unit>.Failure($"The new ValidTo date is before the current ValidTo date.", 400);
+
+            service.ValidTo = request.Dto.ValidTo;
             await context.SaveChangesAsync(cancellationToken);
 
             return Result<Unit>.Success(Unit.Value);

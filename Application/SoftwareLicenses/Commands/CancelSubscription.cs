@@ -2,7 +2,7 @@ using Application.Core;
 using MediatR;
 using Persistence;
 
-namespace Application.SoftwareServices.Commands;
+namespace Application.SoftwareLicenses.Commands;
 
 public class CancelSubscription
 {

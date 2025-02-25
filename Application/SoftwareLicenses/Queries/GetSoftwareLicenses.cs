@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.SoftwareServices.Queries;
+namespace Application.SoftwareLicenses.Queries;
 
 public class GetSoftwareLicenses
 {

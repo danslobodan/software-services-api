@@ -1,4 +1,4 @@
-using Application.SoftwareServices.Commands;
+using Application.SoftwareLicenses.Commands;
 using FluentValidation;
 
 namespace Application.SoftwareLicenses.Validators;
@@ -9,8 +9,8 @@ public class ExtendLicenseValidator : AbstractValidator<ExtendLicense.Command>
     {
         RuleFor(x => x.Id)
             .NotEmpty().WithMessage("Id is required.");
-        RuleFor(x => x.Dto.DurationMonths)
-            .NotEmpty().WithMessage("DurationMonths is required.")
-            .GreaterThan(0).WithMessage("Duration is in months and must be 1 or more.");
+        RuleFor(x => x.Dto.ValidTo)
+            .NotEmpty().WithMessage("ValidTo is required.")
+            .GreaterThan(DateTime.Now).WithMessage("The new ValidTo date must be in the futre.");
     }
 }

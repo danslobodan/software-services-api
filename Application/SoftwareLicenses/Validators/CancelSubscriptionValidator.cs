@@ -1,4 +1,4 @@
-using Application.SoftwareServices.Commands;
+using Application.SoftwareLicenses.Commands;
 using FluentValidation;
 
 namespace Application.SoftwareLicenses.Validators;

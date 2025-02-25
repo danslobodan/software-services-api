@@ -1,4 +1,4 @@
-namespace Application.SoftwareServices.DTOs;
+namespace Application.SoftwareLicenses.DTOs;
 
 public class ChangeLicenseQuantityDto
 {

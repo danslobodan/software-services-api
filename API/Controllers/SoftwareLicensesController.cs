@@ -1,6 +1,5 @@
 using Application.SoftwareLicenses.DTOs;
-using Application.SoftwareServices.Commands;
-using Application.SoftwareServices.DTOs;
+using Application.SoftwareLicenses.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

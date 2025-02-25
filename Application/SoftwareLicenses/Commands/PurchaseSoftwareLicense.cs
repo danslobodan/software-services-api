@@ -1,13 +1,13 @@
 using Application.Core;
 using Application.Interfaces;
 using Application.Software.DTOs;
-using Application.SoftwareServices.DTOs;
+using Application.SoftwareLicenses.DTOs;
 using AutoMapper;
 using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.SoftwareServices.Commands;
+namespace Application.SoftwareLicenses.Commands;
 
 public class PurchaseSoftwareLicense
 {

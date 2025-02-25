@@ -1,10 +1,10 @@
 using Application.Core;
-using Application.SoftwareServices.DTOs;
+using Application.SoftwareLicenses.DTOs;
 using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.SoftwareServices.Commands;
+namespace Application.SoftwareLicenses.Commands;
 
 public class ChangeLicenseQuantity
 {
