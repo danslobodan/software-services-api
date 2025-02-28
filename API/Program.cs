@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApiDbContext>(opts => {
-    var connectionString = builder.Configuration.GetConnectionString("Postgres");
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     opts.UseNpgsql(connectionString);
 });
 builder.Services.AddMediatR(x => {
