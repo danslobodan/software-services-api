@@ -26,7 +26,7 @@ public class ExtendLicense
             if (service.State == LicenseState.Inactive)
                 return Result<Unit>.Failure($"Software license {request.Id} is inactive.", 400);
 
-            if (request.Dto.ValidTo <= request.Dto.ValidTo)
+            if (request.Dto.ValidTo <= service.ValidTo)
                 return Result<Unit>.Failure($"The new ValidTo date is before the current ValidTo date.", 400);
 
             service.ValidTo = request.Dto.ValidTo;
