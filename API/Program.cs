@@ -13,8 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApiDbContext>(opts => {
-    opts.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? throw new InvalidOperationException("Connection string not found."));
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    opts.UseNpgsql(connectionString);
 });
 builder.Services.AddMediatR(x => {
     x.RegisterServicesFromAssemblyContaining<GetAccountsList.Handler>();
@@ -47,9 +47,7 @@ var services = scope.ServiceProvider;
 try {
     var context = services.GetRequiredService<ApiDbContext>();
     await context.Database.MigrateAsync();
-
-    if (app.Environment.IsDevelopment())
-        await DbInitializer.SeedData(context);
+    await DbInitializer.SeedData(context);
 } catch (Exception ex) {
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occured during migration.");

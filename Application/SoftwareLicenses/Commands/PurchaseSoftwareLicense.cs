@@ -24,7 +24,7 @@ public class PurchaseSoftwareLicense
                 return Result<string>.Failure($"Account {request.Dto.AccountId} does not exist.", 400);
 
             var orderResult = await vendor.OrderSoftware(new OrderSoftwareRequest() {
-                DurationMonths = request.Dto.DurationMonths,
+                ValidTo = request.Dto.ValidTo,
                 Id = request.Dto.SoftwareId,
                 Quantity = request.Dto.Quantity
             });
@@ -33,7 +33,6 @@ public class PurchaseSoftwareLicense
                 return Result<string>.Failure($"Failed to order software {request.Dto.SoftwareId}", 500);
 
             var softwareLicense = mapper.Map<SoftwareLicense>(request.Dto);
-            softwareLicense.ValidTo = DateTime.Now.AddMonths(request.Dto.DurationMonths);
 
             context.SoftwareLicenses.Add(softwareLicense);
 

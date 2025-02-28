@@ -34,7 +34,7 @@ public class DbInitializer
                         Name = $"Software Name {i}",
                         Quantity = 5,
                         State = LicenseState.Active,
-                        ValidTo = DateTime.Now.AddYears(2)
+                        ValidTo = DateTime.UtcNow.AddYears(2)
                     });
 
                 return sofwareLicenses;
