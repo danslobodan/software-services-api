@@ -5,6 +5,6 @@ namespace Application.Interfaces;
 
 public interface ISoftwareVendor
 {
-    Task<List<SoftwareModel>> GetSoftware();
+    Task<List<SoftwareModel>> GetSoftware(GetSoftwareDto dto);
     Task<OrderSofwareResult> OrderSoftware(OrderSoftwareRequest request);
 }

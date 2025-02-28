@@ -9,9 +9,10 @@ public class CcpService(IHttpClientFactory clientFactory) : ISoftwareVendor
 {
     readonly HttpClient _client = clientFactory.CreateClient("ccp");
 
-    public async Task<List<Software>> GetSoftware()
+    public async Task<List<Software>> GetSoftware(GetSoftwareDto dto)
     {
-        return await _client.GetFromJsonAsync<List<Software>>("api/software") ??
+        return await _client.GetFromJsonAsync<List<Software>>(
+                $"api/software?page={dto.Page}&pageSize={dto.PageSize}") ??
              throw new Exception("Ccp service returned a null result when trying to get software list.");
     }
 
