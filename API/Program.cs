@@ -16,6 +16,9 @@ builder.Services.AddDbContext<ApiDbContext>(opts => {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     opts.UseNpgsql(connectionString);
 });
+builder.Services.AddStackExchangeRedisCache(opts => {
+    opts.Configuration = builder.Configuration.GetConnectionString("Cache");
+});
 builder.Services.AddMediatR(x => {
     x.RegisterServicesFromAssemblyContaining<GetAccountsList.Handler>();
     x.AddOpenBehavior(typeof(ValidatorBehavior<,>));
